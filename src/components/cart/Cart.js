@@ -4,10 +4,10 @@ import CartColumns from './CartColumns';
 import EmptyCart from './EmptyCart';
 import CartList from './CartList';
 import CartTotal from './CartTotal';
-import { useCartState } from '../../contexts';
+import { useCartContext } from '../../contexts';
 
 export default function Cart() {
-  const { cartState, cartActions } = useCartState();
+  const { cartState, cartActions } = useCartContext();
   const { cart } = cartState;
   let content;
   content =

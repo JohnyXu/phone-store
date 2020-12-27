@@ -1,19 +1,26 @@
 import React from 'react';
-import { useCartState } from '../../contexts';
+import styled from 'styled-components';
+import { useCartContext } from '../../contexts';
+
+const CartWrapper = styled.div`
+  & .imgsize {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  & .count {
+    cursor: text;
+  }
+`;
 
 export default function CartItem({ item }) {
-  const { cartActions } = useCartState();
+  const { cartActions } = useCartContext();
   const { inc, dec, removeItemFromCart } = cartActions;
   const { id, title, img, price, total, count } = item;
   return (
-    <div className="row my-2 text-capitalize text-center">
+    <CartWrapper className="row my-2 text-capitalize text-center">
       <div className="col-10 mx-auto col-lg-2">
-        <img
-          src={img}
-          alt="Product"
-          style={{ width: '5rem', height: '5rem' }}
-          className="img-fluid"
-        />
+        <img src={img} alt="Product" className="img-fluid imgsize" />
       </div>
       <div className="col-10 mx-auto col-lg-2">
         <span className="d-lg-none">Product: </span>
@@ -27,9 +34,7 @@ export default function CartItem({ item }) {
           <span className="btn btn-black mx-1" onClick={() => dec(id)}>
             -
           </span>
-          <span className="btn btn-black mx-1" style={{ cursor: 'auto' }}>
-            {count}
-          </span>
+          <span className="btn btn-black mx-1 count">{count}</span>
           <span className="btn btn-black mx-1" onClick={() => inc(id)}>
             +
           </span>
@@ -49,6 +54,6 @@ export default function CartItem({ item }) {
         <strong className="d-lg-none">Item total: </strong>
         <strong>${total}</strong>
       </div>
-    </div>
+    </CartWrapper>
   );
 }

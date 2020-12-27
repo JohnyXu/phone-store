@@ -2,16 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useProductState, useCartState, useModalState } from '../../../contexts';
+import {
+  useProductContext,
+  useCartContext,
+  useModalContext,
+} from '../../../contexts';
 
 export default function ProductItem({ product }) {
   const { id, title, img, price, inCart } = product;
-  const { productActions } = useProductState();
+
+  const { productActions } = useProductContext();
   const { setProductDetails } = productActions;
-  const { cartActions } = useCartState();
+  const { cartActions } = useCartContext();
   const { addItemToCart } = cartActions;
-  const { modalActions } = useModalState();
+  const { modalActions } = useModalContext();
   const { openModal } = modalActions;
+
   return (
     <Product className="col-9 mx-auto col-md-6 col-lg-3 my-3">
       <div className="card">

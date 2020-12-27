@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Button } from '../../common/Button';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import { useModalState } from '../../../contexts';
+import { useModalContext } from '../../../contexts';
 
 export default function Modal() {
-  const { modalState, modalActions } = useModalState();
+  const { modalState, modalActions } = useModalContext();
   const { modalOpen, modalProduct } = modalState;
   const { closeModal } = modalActions;
   const { img, title, price } = modalProduct;

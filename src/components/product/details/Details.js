@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../common/Button';
 
-import { useProductState, useCartState, useModalState } from '../../../contexts';
+import {
+  useProductContext,
+  useCartContext,
+  useModalContext,
+} from '../../../contexts';
 
 export default function Details() {
   // Accesing state and actions
-  const { productState } = useProductState();
+  const { productState, productActions } = useProductContext();
+  const { setProductDetails } = productActions;
   const { productDetails } = productState;
-  const { cartActions } = useCartState();
+  const { cartActions } = useCartContext();
   const { addItemToCart } = cartActions;
-  const { modalActions } = useModalState();
+  const { modalActions } = useModalContext();
   const { openModal } = modalActions;
 
   const { id, title, img, price, company, info, inCart } = productDetails;
+
+  useEffect(() => {
+    setProductDetails(productDetails);
+  }, [productDetails]);
+
   return (
     <div className="container py-5">
       {/* Product Title */}
@@ -23,6 +33,7 @@ export default function Details() {
         </div>
       </div>
       {/* End Product Title  */}
+
       {/* Product Info */}
       <div className="row">
         {/* Product Image */}
@@ -63,7 +74,6 @@ export default function Details() {
           </div>
         </div>
       </div>
-      {/* End Product Info */}
     </div>
   );
 }

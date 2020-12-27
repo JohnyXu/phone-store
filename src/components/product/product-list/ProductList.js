@@ -1,11 +1,11 @@
 import React from 'react';
 import ProductItem from '../product-item/ProductItem';
 import Title from '../../common/Title';
-import { useProductState } from '../../../contexts';
+import { useProductContext } from '../../../contexts';
 
 export default function ProductList() {
   // Accessing productState
-  const { productState } = useProductState();
+  const { productState } = useProductContext();
   const { products } = productState;
   let productItems = products.map((product) => (
     <ProductItem key={product.id} product={product} />

@@ -1,14 +1,14 @@
 import { SET_PRODUCT_DETAILS } from './types';
 
 export const useProductActions = (productState, dispatch) => {
-  const setProductDetails = product => {
+  const setProductDetails = (product) => {
     dispatch({
       type: SET_PRODUCT_DETAILS,
-      payload: product
+      payload: product,
     });
   };
 
   return {
-    setProductDetails
+    setProductDetails,
   };
 };

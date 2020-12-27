@@ -5,16 +5,16 @@ import {
   DECREMENT_ITEM,
   ADD_TOTALS,
   REMOVE_ITEM_FROM_CART,
-  CLEAR_CART
+  CLEAR_CART,
 } from '../actions/types';
 import { useCartActions } from '../actions';
-import { useProductState } from './product';
+import { useProductContext } from './product';
 
 const initialState = {
   cart: [],
   subtotal: 0,
   tax: 0,
-  total: 0
+  total: 0,
 };
 
 const cartReducer = (state, action) => {
@@ -22,17 +22,17 @@ const cartReducer = (state, action) => {
     case ADD_ITEM_TO_CART:
       return {
         ...state,
-        cart: action.payload
+        cart: action.payload,
       };
     case INCREMENT_ITEM:
       return {
         ...state,
-        cart: action.payload
+        cart: action.payload,
       };
     case DECREMENT_ITEM:
       return {
         ...state,
-        cart: action.payload
+        cart: action.payload,
       };
     case ADD_TOTALS: {
       const { subtotal, tax, total } = action.payload;
@@ -40,13 +40,13 @@ const cartReducer = (state, action) => {
         ...state,
         subtotal,
         tax,
-        total
+        total,
       };
     }
     case REMOVE_ITEM_FROM_CART:
       return {
         ...state,
-        cart: action.payload
+        cart: action.payload,
       };
     case CLEAR_CART:
       return initialState;
@@ -58,20 +58,16 @@ const cartReducer = (state, action) => {
 export const CartContext = createContext(initialState);
 
 // Custom hook for using cart context
-export const useCartState = () => {
+export const useCartContext = () => {
   return useContext(CartContext);
 };
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
-  const { productState } = useProductState();
-  const cartActions = useCartActions(
-    { productState, cartState: state },
-    dispatch
-  );
+  const { productState } = useProductContext();
+  const cartActions = useCartActions({ productState, cartState: state }, dispatch);
+  const contextValue = { cartState: state, cartActions };
   return (
-    <CartContext.Provider value={{ cartState: state, cartActions }}>
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
 };
